@@ -89,81 +89,86 @@ class HomePage extends StatelessWidget {
                     //         },
                     //       );
                     //     });
-                    return GridView.builder(
-                      itemCount: recipes.length,
-                      padding: EdgeInsets.all(0),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1 / 1.4,
+                    return Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: GridView.builder(
+                        itemCount: recipes.length,
+                        padding: EdgeInsets.all(0),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
+                          childAspectRatio: 1 / 1.4,
+                        ),
+                        itemBuilder: (context, index) {
+                          final recipe = recipes[index];
+                          return MyRecipeTile(
+                            recipeImagePath: recipe.image,
+                            recipeName: recipe.name,
+                            recipePrice: recipe.id.toString(),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailPage(recipe: recipe),
+                                ),
+                              );
+                            },
+                          );
+                          // return ListTile(
+                          //   leading: Image.network(recipe.image),
+                          //   title: Text(recipe.name),
+                          //   subtitle: Text(recipe.id.toString()),
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             DetailPage(recipe: recipe),
+                          //       ),
+                          //     );
+                          //   },
+                          // );
+                          // return Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: GestureDetector(
+                          //     onTap: () {
+                          //       Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //           builder: (context) =>
+                          //               DetailPage(recipe: recipe),
+                          //         ),
+                          //       );
+                          //     },
+                          //     child: Container(
+                          //       padding: EdgeInsets.all(12),
+                          //       decoration: BoxDecoration(
+                          //         color: Colors.white,
+                          //         borderRadius: BorderRadius.circular(12),
+                          //       ),
+                          //       child: Column(
+                          //         children: [
+                          //           ClipRRect(
+                          //             borderRadius: BorderRadius.circular(12),
+                          //             child: Image.network(
+                          //               recipe.image,
+                          //               height: 200,
+                          //             ),
+                          //           ),
+                          //           Column(
+                          //             children: [
+                          //             Text(recipe.name),
+                          //             Text(recipe.id.toString())
+                          //           ],)
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // );
+                        },
                       ),
-                      itemBuilder: (context, index) {
-                        final recipe = recipes[index];
-                        return MyRecipeTile(
-                          recipeImagePath: recipe.image,
-                          recipeName: recipe.name,
-                          recipePrice: recipe.id.toString(),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailPage(recipe: recipe),
-                              ),
-                            );
-                          },
-                        );
-                        // return ListTile(
-                        //   leading: Image.network(recipe.image),
-                        //   title: Text(recipe.name),
-                        //   subtitle: Text(recipe.id.toString()),
-                        //   onTap: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             DetailPage(recipe: recipe),
-                        //       ),
-                        //     );
-                        //   },
-                        // );
-                        // return Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: GestureDetector(
-                        //     onTap: () {
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) =>
-                        //               DetailPage(recipe: recipe),
-                        //         ),
-                        //       );
-                        //     },
-                        //     child: Container(
-                        //       padding: EdgeInsets.all(12),
-                        //       decoration: BoxDecoration(
-                        //         color: Colors.white,
-                        //         borderRadius: BorderRadius.circular(12),
-                        //       ),
-                        //       child: Column(
-                        //         children: [
-                        //           ClipRRect(
-                        //             borderRadius: BorderRadius.circular(12),
-                        //             child: Image.network(
-                        //               recipe.image,
-                        //               height: 200,
-                        //             ),
-                        //           ),
-                        //           Column(
-                        //             children: [
-                        //             Text(recipe.name),
-                        //             Text(recipe.id.toString())
-                        //           ],)
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // );
-                      },
                     );
                   } else {
                     return const Center(
