@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/providers/recipe_provider.dart';
+import 'package:recipe_app/screens/detail_screen.dart';
 import 'package:recipe_app/shared/recipe_card.dart';
+import 'package:provider/provider.dart';
+
+import '../models/recipe.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,10 +13,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.grey.shade50,
-        // elevation: 4,
-        centerTitle: true,
+        backgroundColor: Colors.transparent,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -19,45 +21,49 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Text("Food Recipe App")
+            Text(
+              "Recipe App",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            )
           ],
         ),
+        centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          RecipeCard(
-              title: "My Recipe Title",
-              rating: "3",
-              cookTime: "4",
-              thumbnailUrl: "lib/images/pizza.jpg"),
-
-                    RecipeCard(
-              title: "My Recipe Title",
-              rating: "3",
-              cookTime: "4",
-              thumbnailUrl: "lib/images/pizza.jpg"),
-
-
-                        RecipeCard(
-              title: "My Recipe Title",
-              rating: "3",
-              cookTime: "4",
-              thumbnailUrl: "lib/images/pizza.jpg"),
-
-
-                        RecipeCard(
-              title: "My Recipe Title",
-              rating: "3",
-              cookTime: "4",
-              thumbnailUrl: "lib/images/pizza.jpg"),
-
-
-                        RecipeCard(
-              title: "My Recipe Title",
-              rating: "3",
-              cookTime: "4",
-              thumbnailUrl: "lib/images/pizza.jpg"),
-        ],
+      body: Consumer<RecipeProvider>(
+        builder: (context, notifier, child) {
+          if (notifier.loading) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.deepOrange.shade300,
+              ),
+            );
+          } else if (notifier.recipe.isEmpty) {
+            return const Center(child: Text("No Recipe"));
+          } else {
+            return ListView.builder(
+              itemCount: notifier.recipe.length,
+              itemBuilder: (context, index) {
+                Recipe recipes = notifier.recipe[index];
+                return RecipeCard(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailScreen(recipe: recipes),
+                        ),
+                      );
+                    },
+                    title: recipes.name,
+                    rating: recipes.rating.toString(),
+                    cookTime: recipes.cookTimeMinutes.toString(),
+                    thumbnailUrl: recipes.image);
+              },
+            );
+          }
+        },
       ),
     );
   }
