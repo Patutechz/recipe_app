@@ -4,7 +4,7 @@ import 'package:recipe_app/screens/detail_screen.dart';
 import 'package:recipe_app/shared/recipe_card.dart';
 import 'package:provider/provider.dart';
 
-import '../models/recipe.dart';
+import 'package:recipe_app/models/recipe.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
