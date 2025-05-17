@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:recipe_app/models/recipe.dart';
+import 'package:recipe_app/models/recipe_model.dart';
 import 'package:http/http.dart' as http;
 
 class RecipeServices {
